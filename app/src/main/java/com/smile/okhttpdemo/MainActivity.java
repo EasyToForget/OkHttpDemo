@@ -5,9 +5,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.smile.okhttp.integration.Error;
-import com.smile.okhttp.integration.OkCallback;
-import com.smile.okhttp.integration.OkHttp;
+import com.smile.okhttpintegration.OkCallback;
+import com.smile.okhttpintegration.OkHttp;
+import com.smile.okhttpintegration.Error;
 
 public class MainActivity extends AppCompatActivity {
 
