@@ -56,7 +56,6 @@ public class OkHttp {
     private static int retryCount = 0;
 
     private static String userAgent;
-    static String errorResponse = "无法连接服务，请稍后再试！";
     static String errorCode = "error_code";
 
     private static OkHttpClient.Builder builder;
@@ -311,11 +310,6 @@ public class OkHttp {
     public static void setUserAgent(String userAgent) {
         if (!TextUtils.isEmpty(userAgent))
             OkHttp.userAgent = userAgent;
-    }
-
-    public static void setErrorResponse(String errorResponse) {
-        if (!TextUtils.isEmpty(errorResponse))
-            OkHttp.errorResponse = errorResponse;
     }
 
     public static void setErrorCode(String errorCode) {

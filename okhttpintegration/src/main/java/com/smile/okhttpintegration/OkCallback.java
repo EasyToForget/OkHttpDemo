@@ -40,10 +40,7 @@ public abstract class OkCallback implements Callback {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                Error error = new Error();
-                error.setError_code(0);
-                error.setError(OkHttp.errorResponse);
-                onFailure(error);
+                onFailure("");
             }
         });
     }
@@ -55,10 +52,7 @@ public abstract class OkCallback implements Callback {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    Error error = new Error();
-                    error.setError_code(0);
-                    error.setError(OkHttp.errorResponse);
-                    onFailure(error);
+                    onFailure("");
                 }
             });
             return;
@@ -69,10 +63,7 @@ public abstract class OkCallback implements Callback {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    Error error = new Error();
-                    error.setError_code(0);
-                    error.setError(OkHttp.errorResponse);
-                    onFailure(error);
+                    onFailure("");
                 }
             });
             return;
@@ -82,7 +73,7 @@ public abstract class OkCallback implements Callback {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    onFailure(new Gson().fromJson(res, Error.class));
+                    onFailure(res);
                 }
             });
             return;
@@ -98,6 +89,6 @@ public abstract class OkCallback implements Callback {
 
     public abstract void onResponse(String response);
 
-    public abstract void onFailure(Error error);
+    public abstract void onFailure(String error);
 
 }

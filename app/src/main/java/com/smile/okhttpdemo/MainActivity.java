@@ -7,7 +7,6 @@ import android.view.View;
 
 import com.smile.okhttpintegration.OkCallback;
 import com.smile.okhttpintegration.OkHttp;
-import com.smile.okhttpintegration.Error;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,9 +18,8 @@ public class MainActivity extends AppCompatActivity {
         OkHttp.setConnectTimeOut(5);
         OkHttp.setReadTimeOut(5);
         OkHttp.setWriteTimeOut(5);
-        OkHttp.setRetryCount(4);
+        //OkHttp.setRetryCount(4);
         OkHttp.setErrorCode("setErrorCode");
-        OkHttp.setErrorResponse("setErrorResponse");
         OkHttp.setUserAgent("setUserAgent");
 
         findViewById(R.id.btn_req).setOnClickListener(new View.OnClickListener() {
@@ -34,8 +32,8 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Error error) {
-                        Log.e("onFailure", error.getError());
+                    public void onFailure(String error) {
+                        Log.e("onFailure", error);
                     }
                 });
             }
