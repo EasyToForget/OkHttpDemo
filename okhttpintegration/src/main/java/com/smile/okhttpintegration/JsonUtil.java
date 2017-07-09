@@ -68,7 +68,7 @@ public class JsonUtil {
             String key;
             while (keyIterator.hasNext()) {
                 key = (String) keyIterator.next();
-                if (key.equals(OkHttp.errorCode)) {
+                if (OkHttp.errorCode.equals(key)) {
                     isErrorCode = true;
                     break;
                 }
