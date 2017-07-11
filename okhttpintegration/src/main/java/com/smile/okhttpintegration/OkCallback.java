@@ -36,11 +36,11 @@ public abstract class OkCallback implements Callback {
     private static Handler handler = new Handler(Looper.getMainLooper());
 
     @Override
-    public void onFailure(@NonNull Call call, @NonNull IOException e) {
+    public void onFailure(@NonNull Call call, @NonNull final IOException e) {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                onFailure("");
+                onFailure(e.getMessage());
             }
         });
     }
@@ -63,7 +63,7 @@ public abstract class OkCallback implements Callback {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    onFailure("");
+                    onFailure(res);
                 }
             });
             return;
