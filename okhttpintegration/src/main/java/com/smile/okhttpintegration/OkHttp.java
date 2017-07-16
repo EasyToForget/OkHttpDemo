@@ -41,8 +41,10 @@ import javax.net.ssl.X509TrustManager;
 import okhttp3.Call;
 import okhttp3.FormBody;
 import okhttp3.Interceptor;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 /**
@@ -50,6 +52,7 @@ import okhttp3.Response;
  * @since 2017/04/10.
  */
 public class OkHttp {
+    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     private static int connectTimeOut = 10;
     private static int readTimeOut = 20;
     private static int writeTimeOut = 20;
@@ -112,6 +115,8 @@ public class OkHttp {
     public static Call get(String url, Map<String, Object> params, Object tag, OkCallback callback) {
         String endUrl = url + "?" + encodeParameters(params);
 
+        Log.e("url", endUrl);
+
         Request.Builder builder = new Request.Builder().url(endUrl);
         if (tag != null) {
             builder.tag(tag);
@@ -156,6 +161,18 @@ public class OkHttp {
      * post方法
      *
      * @param url      url
+     * @param json     json
+     * @param callback 回调函数
+     * @return call
+     */
+    public static Call postJson(String url, String json, OkCallback callback) {
+        return postJson(url, json, null, callback);
+    }
+
+    /**
+     * post方法
+     *
+     * @param url      url
      * @param params   参数
      * @param tag      标记位
      * @param callback 回调函数
@@ -180,8 +197,37 @@ public class OkHttp {
 
         Request request = builder.build();
         Call call = getInstance()
-                .readTimeout(timeOut, TimeUnit.SECONDS)
-                .writeTimeout(timeOut, TimeUnit.SECONDS)
+                .readTimeout(timeOut == 0 ? readTimeOut : timeOut, TimeUnit.SECONDS)
+                .writeTimeout(timeOut == 0 ? writeTimeOut : timeOut, TimeUnit.SECONDS)
+                .connectTimeout(connectTimeOut, TimeUnit.SECONDS)
+                .retryOnConnectionFailure(false)
+                .build()
+                .newCall(request);
+        call.enqueue(callback);
+        return call;
+    }
+
+    /**
+     * postJson方法
+     *
+     * @param url      url
+     * @param json     json
+     * @param tag      标记位
+     * @param callback 回调函数
+     * @return call
+     */
+    public static Call postJson(String url, String json, Object tag, OkCallback callback) {
+        Request.Builder builder = new Request.Builder().url(url);
+        if (tag != null) {
+            builder.tag(tag);
+        }
+
+        RequestBody requestBody = RequestBody.create(JSON, json);
+
+        Request request = builder.post(requestBody).build();
+        Call call = getInstance()
+                .readTimeout(readTimeOut, TimeUnit.SECONDS)
+                .writeTimeout(writeTimeOut, TimeUnit.SECONDS)
                 .connectTimeout(connectTimeOut, TimeUnit.SECONDS)
                 .retryOnConnectionFailure(false)
                 .build()
