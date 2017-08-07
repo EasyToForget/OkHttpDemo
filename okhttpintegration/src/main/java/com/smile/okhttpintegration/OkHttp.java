@@ -161,18 +161,6 @@ public class OkHttp {
      * post方法
      *
      * @param url      url
-     * @param json     json
-     * @param callback 回调函数
-     * @return call
-     */
-    public static Call postJson(String url, String json, OkCallback callback) {
-        return postJson(url, json, null, callback);
-    }
-
-    /**
-     * post方法
-     *
-     * @param url      url
      * @param params   参数
      * @param tag      标记位
      * @param callback 回调函数
@@ -205,6 +193,18 @@ public class OkHttp {
                 .newCall(request);
         call.enqueue(callback);
         return call;
+    }
+
+    /**
+     * postJson方法
+     *
+     * @param url      url
+     * @param json     json
+     * @param callback 回调函数
+     * @return call
+     */
+    public static Call postJson(String url, String json, OkCallback callback) {
+        return postJson(url, json, null, callback);
     }
 
     /**

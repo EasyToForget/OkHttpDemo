@@ -19,8 +19,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 
-import com.google.gson.Gson;
-
 import java.io.IOException;
 
 import okhttp3.Call;
