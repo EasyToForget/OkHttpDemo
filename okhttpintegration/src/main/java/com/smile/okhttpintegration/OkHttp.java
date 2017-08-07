@@ -16,9 +16,11 @@
 package com.smile.okhttpintegration;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -28,6 +30,7 @@ import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -42,6 +45,7 @@ import okhttp3.Call;
 import okhttp3.FormBody;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -56,6 +60,8 @@ public class OkHttp {
     private static int connectTimeOut = 10;
     private static int readTimeOut = 20;
     private static int writeTimeOut = 20;
+    private static int uploadReadTimeOut = 60;
+    private static int uploadWriteTimeOut = 60;
     private static int retryCount = 0;
 
     private static String userAgent;
@@ -228,6 +234,92 @@ public class OkHttp {
         Call call = getInstance()
                 .readTimeout(readTimeOut, TimeUnit.SECONDS)
                 .writeTimeout(writeTimeOut, TimeUnit.SECONDS)
+                .connectTimeout(connectTimeOut, TimeUnit.SECONDS)
+                .retryOnConnectionFailure(false)
+                .build()
+                .newCall(request);
+        call.enqueue(callback);
+        return call;
+    }
+
+    /**
+     * 上传单个文件方法
+     *
+     * @param url      url
+     * @param params   参数
+     * @param filePath 文件路径
+     * @param callback 回调函数
+     * @return call
+     */
+    public static Call upload(String url, Map<String, Object> params, String fileKey, String filePath, OkCallback callback) {
+        MultipartBody.Builder builder = new MultipartBody.Builder();
+        builder.setType(MultipartBody.FORM);
+
+        if (params == null) {
+            params = new HashMap<>();
+        }
+
+        if (params.size() > 0) {
+            for (String key : params.keySet()) {
+                builder.addFormDataPart(key, params.get(key) == null ? "" : String.valueOf(params.get(key)));
+            }
+        }
+
+        if (TextUtils.isEmpty(fileKey) || TextUtils.isEmpty(filePath))
+            return null;
+
+        File file = new File(filePath);
+        builder.addFormDataPart(fileKey, file.getName(), RequestBody.create(null, file));
+
+        RequestBody body = builder.build();
+        Request request = new Request.Builder().url(url).post(body).build();
+        Call call = getInstance()
+                .readTimeout(uploadReadTimeOut, TimeUnit.SECONDS)
+                .writeTimeout(uploadWriteTimeOut, TimeUnit.SECONDS)
+                .connectTimeout(connectTimeOut, TimeUnit.SECONDS)
+                .retryOnConnectionFailure(false)
+                .build()
+                .newCall(request);
+        call.enqueue(callback);
+        return call;
+    }
+
+    /**
+     * 上传多个文件方法
+     *
+     * @param url      url
+     * @param params   参数
+     * @param filePath 文件路径
+     * @param callback 回调函数
+     * @return call
+     */
+    public static Call uploadMultiple(String url, Map<String, Object> params, String fileKey, List<String> filePath, OkCallback callback) {
+        MultipartBody.Builder builder = new MultipartBody.Builder();
+        builder.setType(MultipartBody.FORM);
+
+        if (params == null) {
+            params = new HashMap<>();
+        }
+
+        if (params.size() > 0) {
+            for (String key : params.keySet()) {
+                builder.addFormDataPart(key, params.get(key) == null ? "" : String.valueOf(params.get(key)));
+            }
+        }
+
+        if (TextUtils.isEmpty(fileKey) || filePath == null || filePath.isEmpty())
+            return null;
+
+        for (String path : filePath) {
+            File file = new File(path);
+            builder.addFormDataPart(fileKey, file.getName(), RequestBody.create(null, file));
+        }
+
+        RequestBody body = builder.build();
+        Request request = new Request.Builder().url(url).post(body).build();
+        Call call = getInstance()
+                .readTimeout(uploadReadTimeOut * filePath.size(), TimeUnit.SECONDS)
+                .writeTimeout(uploadWriteTimeOut * filePath.size(), TimeUnit.SECONDS)
                 .connectTimeout(connectTimeOut, TimeUnit.SECONDS)
                 .retryOnConnectionFailure(false)
                 .build()
