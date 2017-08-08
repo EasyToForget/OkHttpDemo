@@ -78,45 +78,45 @@
 ### GET
 
 ```java
-                Map<String, Object> params = new HashMap<>();
-                 params.put("lang", "zh");
-                 params.put("type", 2);
-                 params.put("page", 1);
-                 params.put("pageSize", 10);
-                 OkHttp.get(HOME, params, new OkCallback() {
-                     @Override
-                     public void onResponse(String response) {
-                         Log.e("onResponse", response);
-                         Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
-                     }
+   Map<String, Object> params = new HashMap<>();
+   params.put("lang", "zh");
+   params.put("type", 2);
+   params.put("page", 1);
+   params.put("pageSize", 10);
+   OkHttp.get(HOME, params, new OkCallback() {
+       @Override
+       public void onResponse(String response) {
+           Log.e("onResponse", response);
+           Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
+       }
  
-                     @Override
-                     public void onFailure(String error) {
-                         Log.e("onFailure", error);
-                         Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
-                     }
-                 });
+       @Override
+       public void onFailure(String error) {
+           Log.e("onFailure", error);
+           Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
+       }
+   });
 ```
 
 ### POST
 
 ```java
-                 Map<String, Object> params = new HashMap<>();
-                 params.put("email", "smile");
-                 params.put("password", "smile");
-                 OkHttp.post(LOGIN, params, new OkCallback() {
-                     @Override
-                     public void onResponse(String response) {
-                         Log.e("onResponse", response);
-                         Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
-                     }
+   Map<String, Object> params = new HashMap<>();
+   params.put("email", "smile");
+   params.put("password", "smile");
+   OkHttp.post(LOGIN, params, new OkCallback() {
+       @Override
+       public void onResponse(String response) {
+           Log.e("onResponse", response);
+           Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
+       }
  
-                     @Override
-                     public void onFailure(String error) {
-                         Log.e("onFailure", error);
-                         Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
-                     }
-                 });
+       @Override
+       public void onFailure(String error) {
+           Log.e("onFailure", error);
+           Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
+       }
+   });
 
 ```
 
