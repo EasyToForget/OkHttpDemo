@@ -121,5 +121,81 @@
 ```
 
 
+### POST JSON
+
+```java
+   User user = new User();
+   user.setAge(10);
+   user.setName("Smile");
+   user.setSex("男");
+   String json = new Gson().toJson(user);
+   
+   OkHttp.postJson(LOGIN, json, new OkCallback() {
+       @Override
+       public void onResponse(String response) {
+           Log.e("onResponse", response);
+           Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
+       }
+ 
+       @Override
+       public void onFailure(String error) {
+           Log.e("onFailure", error);
+           Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
+       }
+   });
+
+```
+
+### UPLOAD FILE
+
+```java
+   Map<String, Object> params = new HashMap<>();
+   params.put("email", "smile");
+   params.put("password", "smile");
+   
+   OkHttp.upload(LOGIN, params, "file[]", "file01", new OkCallback() {
+       @Override
+       public void onResponse(String response) {
+           Log.e("onResponse", response);
+           Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
+       }
+ 
+       @Override
+       public void onFailure(String error) {
+           Log.e("onFailure", error);
+           Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
+       }
+   });
+
+```
+
+### UPLOAD MULTIPLE FILE
+
+```java
+   Map<String, Object> params = new HashMap<>();
+   params.put("email", "smile");
+   params.put("password", "smile");
+   List<String> list = new ArrayList<>();
+   list.add("file01");
+   list.add("file02");
+   list.add("file03");
+   
+   OkHttp.uploadMulti(LOGIN, params, "file[]", list, new OkCallback() {
+       @Override
+       public void onResponse(String response) {
+           Log.e("onResponse", response);
+           Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
+       }
+ 
+       @Override
+       public void onFailure(String error) {
+           Log.e("onFailure", error);
+           Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
+       }
+   });
+
+```
+
+
 
 
