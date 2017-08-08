@@ -16,7 +16,6 @@
 package com.smile.okhttpintegration;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
@@ -56,7 +55,7 @@ import okhttp3.Response;
  * @since 2017/04/10.
  */
 public class OkHttp {
-    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+    private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     private static int connectTimeOut = 10;
     private static int readTimeOut = 20;
     private static int writeTimeOut = 20;
@@ -247,6 +246,7 @@ public class OkHttp {
      *
      * @param url      url
      * @param params   参数
+     * @param fileKey  文件参数key
      * @param filePath 文件路径
      * @param callback 回调函数
      * @return call
@@ -259,7 +259,7 @@ public class OkHttp {
             params = new HashMap<>();
         }
 
-        if (params.size() > 0) {
+        if (!params.isEmpty()) {
             for (String key : params.keySet()) {
                 builder.addFormDataPart(key, params.get(key) == null ? "" : String.valueOf(params.get(key)));
             }
@@ -289,11 +289,12 @@ public class OkHttp {
      *
      * @param url      url
      * @param params   参数
-     * @param filePath 文件路径
+     * @param fileKey  文件参数key
+     * @param filePath 文件路径集合
      * @param callback 回调函数
      * @return call
      */
-    public static Call uploadMultiple(String url, Map<String, Object> params, String fileKey, List<String> filePath, OkCallback callback) {
+    public static Call uploadMulti(String url, Map<String, Object> params, String fileKey, List<String> filePath, OkCallback callback) {
         MultipartBody.Builder builder = new MultipartBody.Builder();
         builder.setType(MultipartBody.FORM);
 
@@ -301,7 +302,7 @@ public class OkHttp {
             params = new HashMap<>();
         }
 
-        if (params.size() > 0) {
+        if (!params.isEmpty()) {
             for (String key : params.keySet()) {
                 builder.addFormDataPart(key, params.get(key) == null ? "" : String.valueOf(params.get(key)));
             }
@@ -342,7 +343,10 @@ public class OkHttp {
         StringBuilder sb = new StringBuilder("");
         try {
             for (Map.Entry<String, Object> entry : params.entrySet()) {
-                sb.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
+                String key = entry.getKey();
+                if (TextUtils.isEmpty(key))
+                    continue;
+                sb.append(URLEncoder.encode(key, "UTF-8"));
                 sb.append('=');
                 sb.append(URLEncoder.encode(entry.getValue() == null ? "" : String.valueOf(entry.getValue()), "UTF-8"));
                 sb.append('&');
