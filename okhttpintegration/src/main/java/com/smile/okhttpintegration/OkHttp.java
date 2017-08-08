@@ -181,8 +181,10 @@ public class OkHttp {
         if (params == null) {
             params = new HashMap<>();
         }
-        if (params.size() > 0) {
+        if (!params.isEmpty()) {
             for (String key : params.keySet()) {
+                if (TextUtils.isEmpty(key))
+                    continue;
                 formBuilder.add(key, params.get(key) == null ? "" : String.valueOf(params.get(key)));
             }
         }
