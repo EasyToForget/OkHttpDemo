@@ -56,15 +56,20 @@ import okhttp3.Response;
  */
 public class OkHttp {
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+
     private static int connectTimeOut = 10;
     private static int readTimeOut = 20;
     private static int writeTimeOut = 20;
     private static int uploadReadTimeOut = 60;
+
     private static int uploadWriteTimeOut = 60;
     private static int retryCount = 0;
 
+
     private static String userAgent;
     static String errorCode = "error_code";
+    static String statusKey;
+    static String statusValue;
 
     private static OkHttpClient.Builder builder;
 
@@ -502,13 +507,27 @@ public class OkHttp {
     }
 
     /**
-     * 设置服务端返回的error code，用于判断当时请求是成功还是失败
+     * 任何时候对请求响应结果的判断不要依赖于http协议的CODE值，而应该首先检查返回的json数据结构是否存在 error_code 字段。
+     * 设置服务端返回的error code，用于判断当前请求响应结果
      *
-     * @param errorCode code
+     * @param errorCode errorCode
      */
     public static void setErrorCode(String errorCode) {
         if (!TextUtils.isEmpty(errorCode))
             OkHttp.errorCode = errorCode;
     }
 
+    /**
+     * 任何时候对请求响应结果的判断不要依赖于http协议的CODE值，而应该首先检查返回的json数据结构中 status 的值。
+     * 设置服务端返回的error code，用于判断当前请求响应结果
+     *
+     * @param statusKey   用于判断json数据结构中的状态
+     * @param statusValue 用于判断json数据结构的请求响应结果
+     */
+    public static void setErrorStatus(String statusKey, String statusValue) {
+        if (!TextUtils.isEmpty(statusKey)) {
+            OkHttp.statusKey = statusKey;
+            OkHttp.statusValue = statusValue;
+        }
+    }
 }

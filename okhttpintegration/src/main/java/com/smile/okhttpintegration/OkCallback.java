@@ -35,6 +35,7 @@ public abstract class OkCallback implements Callback {
 
     @Override
     public void onFailure(@NonNull Call call, @NonNull final IOException e) {
+        //请求连接超时或请求响应失败
         handler.post(new Runnable() {
             @Override
             public void run() {
@@ -47,6 +48,7 @@ public abstract class OkCallback implements Callback {
     public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
         ResponseBody body = response.body();
         if (body == null) {
+            //请求响应为空
             handler.post(new Runnable() {
                 @Override
                 public void run() {
@@ -57,6 +59,7 @@ public abstract class OkCallback implements Callback {
         }
         final String res = body.string();
 
+        //判断当前请求响应结果是不是json字符串
         if (!JsonUtil.isGoodJson(res)) {
             handler.post(new Runnable() {
                 @Override

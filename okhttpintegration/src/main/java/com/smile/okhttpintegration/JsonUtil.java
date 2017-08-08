@@ -64,6 +64,11 @@ public class JsonUtil {
         boolean isErrorCode = false;
         try {
             JSONObject jsonObject = new JSONObject(str);
+            if (!TextUtils.isEmpty(OkHttp.statusKey)){
+                String code = jsonObject.getString(OkHttp.statusKey);
+                return !code.equals(OkHttp.statusValue);
+
+            }
             Iterator<?> keyIterator = jsonObject.keys();
             String key;
             while (keyIterator.hasNext()) {
