@@ -53,14 +53,24 @@
 一般情况下，对接口请求响应结果的判断有两种情况：
 - 返回的 json 数据中会包含诸如 error_code 的 key，用来表明此接口响应失败，如下代码所示；
 ```java
-  {
-    request: "http://api.tuikexing.com",
-    error_code: 50001,
-    error: "！",
-    error_description: "{错误码0: 1502183653-2442}"
-}
+    {
+        request: "http://api.tuikexing.com",
+        error_code: 50001,
+        error: "！",
+        error_description: "{错误码0: 1502183653-2442}"
+    }
 ```
-- 
+- 返回的 json 数据结构有固定的诸如 status 的 key，根据 status key 所对应的 value 值来判断此接口是响应失败，
+你可以指定当 status 为 200 时代表接口响应成功。如下所示：
+```java
+    {
+        status: 200,
+        msg: "success",
+        data: [ ],
+        totalPage: 0,
+        totalCount: 0
+    }
+```
 
 ### GET
 
