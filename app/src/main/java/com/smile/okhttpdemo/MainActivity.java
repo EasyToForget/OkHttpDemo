@@ -29,15 +29,6 @@ public class MainActivity extends AppCompatActivity {
 
         context = getApplicationContext();
 
-        OkHttp.setConnectTimeOut(30);
-        OkHttp.setReadTimeOut(30);
-        OkHttp.setWriteTimeOut(30);
-        OkHttp.setUploadReadTimeOut(30);
-        OkHttp.setUploadWriteTimeOut(30);
-        //OkHttp.setRetryCount(4);
-        //OkHttp.setErrorCode("setErrorCode");
-        OkHttp.setErrorStatus("state", "0000");
-        //OkHttp.setUserAgent("setUserAgent");
 
         findViewById(R.id.btn_get).setOnClickListener(new View.OnClickListener() {
             @Override
