@@ -25,14 +25,6 @@ or Gradle:
 ```groovy
     compile 'com.smile:okhttpintegration:1.0.4'
 ```
-
-or Ivy
-	
-``` xml
-	<dependency org='com.smile' name='okhttpintegration' rev='1.0.4'>
-      <artifact name='okhttpintegration' ext='pom' ></artifact>
-    </dependency>
-```
 	
 ## 初始化
 ```java
