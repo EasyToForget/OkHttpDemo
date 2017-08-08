@@ -1,8 +1,8 @@
-# [OkhttpIntegration](https://github.com/EasyToForget/OkHttpDemo)
+# [OkhttpIntegration][1]
 
 对 OkHttp 的简单封装
 
-目前对应 [OkHttp](https://github.com/square/okhttp) 版本`3.8.1`.
+目前对应 [OkHttp][2] 版本`3.8.1`.
 
 ## Demo
 <img src="gif/demo01.gif" alt="demo"/>
@@ -11,9 +11,27 @@
 ## 使用
 
 Android Studio
+
+下载 [the latest JAR][3] or grab via Maven:
+```xml
+    <dependency>
+        <groupId>com.smile</groupId>
+        <artifactId>okhttpintegration</artifactId>
+        <version>1.0.4</version>
+        <type>pom</type>
+    </dependency>
+```
+or Gradle:
+```groovy
+    compile 'com.smile:okhttpintegration:1.0.4'
+```
+
+or Ivy
 	
-``` java
-	compile 'com.smile:okhttpintegration:1.0.4'
+``` xml
+	<dependency org='com.smile' name='okhttpintegration' rev='1.0.4'>
+      <artifact name='okhttpintegration' ext='pom' ></artifact>
+    </dependency>
 ```
 	
 ## 初始化
@@ -218,5 +236,8 @@ limitations under the License.
 ```
 
 
+ [1]: https://github.com/EasyToForget/OkHttpDemo
+ [2]: https://github.com/square/okhttp
+ [3]: https://dl.bintray.com/easytoforget/maven/com/smile/okhttpintegration/1.0.4/okhttpintegration-1.0.4-sources.jar
 
 
