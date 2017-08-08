@@ -13,26 +13,27 @@
 * Android Studio
 	
 	```
-	compile 'com.smile:okhttpintegration:1.0.1'
+	compile 'com.smile:okhttpintegration:1.0.4'
 	```
 	
+## 方法说明
 ```java
-public class MyApplication extends Application
-{	
-	@Override
-    public void onCreate()
-    {
-        super.onCreate();
+    public class MyApplication extends Application{	
+        @Override
+        public void onCreate(){
+            super.onCreate();
 
-        OkHttp.setConnectTimeOut(5);
-        OkHttp.setReadTimeOut(5);
-        OkHttp.setWriteTimeOut(5);
-        //OkHttp.setRetryCount(4);
-        OkHttp.setErrorCode("setErrorCode");
-        OkHttp.setUserAgent("setUserAgent");
-
+            OkHttp.setConnectTimeOut(30);
+            OkHttp.setReadTimeOut(30);
+            OkHttp.setWriteTimeOut(30);
+            OkHttp.setUploadReadTimeOut(30);
+            OkHttp.setUploadWriteTimeOut(30);
+            OkHttp.setRetryCount(4);
+            OkHttp.setErrorCode("setErrorCode");
+            OkHttp.setErrorStatus("state", "0000");
+            OkHttp.setUserAgent("setUserAgent");
+        }
     }
-}
 ```
 
 ### GET
