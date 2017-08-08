@@ -52,7 +52,7 @@
 
 一般情况下，对接口请求响应结果的判断有两种情况：
 - 返回的 json 数据中会包含诸如 error_code 的 key，用来表明此接口响应失败，如下代码所示；
-```json
+```java
   {
     request: "http://api.tuikexing.com",
     error_code: 50001,
