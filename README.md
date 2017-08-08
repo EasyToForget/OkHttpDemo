@@ -47,8 +47,7 @@
 |setRetryCount(2)           |设置请求失败时的重试次数      |
 |setUserAgent("")           |设置UserAgent                |
 
-- setErrorCode("")
-- setErrorStatus("", "")
+>setErrorCode("") 和 setErrorStatus("", "")
 
 
 ### GET
