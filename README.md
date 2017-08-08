@@ -16,7 +16,7 @@
 	compile 'com.smile:okhttpintegration:1.0.4'
 	```
 	
-## 方法说明
+## 在 Application 中进行初始化
 ```java
     public class MyApplication extends Application{	
         @Override
@@ -28,13 +28,25 @@
             OkHttp.setWriteTimeOut(30);
             OkHttp.setUploadReadTimeOut(30);
             OkHttp.setUploadWriteTimeOut(30);
-            OkHttp.setRetryCount(4);
+            OkHttp.setRetryCount(2);
             OkHttp.setErrorCode("setErrorCode");
             OkHttp.setErrorStatus("state", "0000");
             OkHttp.setUserAgent("setUserAgent");
         }
     }
 ```
+
+
+|方法                        |    描述                  |
+|:--------                  | :--------                 |
+|setConnectTimeOut(30)      |与服务器建立连接超时时间    |
+|setReadTimeOut(30)         |设置读取响应超时时间        |
+|setWriteTimeOut(30)        |设置写入响应超时时间        |
+|setUploadReadTimeOut(30)   |设置上传文件读取响应超时时间 |
+|setUploadWriteTimeOut(30)  |设置上传文件写入响应超时时间 |
+|setRetryCount(2)           |设置请求失败时的重试次数      |
+|setUserAgent("")           |设置UserAgent                |
+
 
 ### GET
 
