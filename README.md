@@ -10,7 +10,7 @@
 
 ## 使用
 
-* Android Studio
+Android Studio
 	
 	```
 	compile 'com.smile:okhttpintegration:1.0.4'
