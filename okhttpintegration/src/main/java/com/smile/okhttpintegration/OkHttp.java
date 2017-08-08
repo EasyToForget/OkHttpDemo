@@ -225,6 +225,7 @@ public class OkHttp {
      */
     public static Call postJson(String url, String json, Object tag, OkCallback callback) {
         Request.Builder builder = new Request.Builder().url(url);
+
         if (tag != null) {
             builder.tag(tag);
         }
@@ -435,27 +436,76 @@ public class OkHttp {
     }
 
 
+    /**
+     * 设置连接超时时间
+     *
+     * @param connectTimeOut 超时时间
+     */
     public static void setConnectTimeOut(int connectTimeOut) {
         OkHttp.connectTimeOut = connectTimeOut;
     }
 
+    /**
+     * 设置读取超时时间
+     *
+     * @param readTimeOut 超时时间
+     */
     public static void setReadTimeOut(int readTimeOut) {
         OkHttp.readTimeOut = readTimeOut;
     }
 
+    /**
+     * 设置上传文件读取超时时间
+     *
+     * @param uploadReadTimeOut 超时时间
+     */
+    public static void setUploadReadTimeOut(int uploadReadTimeOut) {
+        OkHttp.uploadReadTimeOut = uploadReadTimeOut;
+    }
+
+
+    /**
+     * 设置写入超时时间
+     *
+     * @param writeTimeOut 超时时间
+     */
     public static void setWriteTimeOut(int writeTimeOut) {
         OkHttp.writeTimeOut = writeTimeOut;
     }
 
+    /**
+     * 设置上传文件写入超时时间
+     *
+     * @param uploadWriteTimeOut 超时时间
+     */
+    public static void setUploadWriteTimeOut(int uploadWriteTimeOut) {
+        OkHttp.uploadWriteTimeOut = uploadWriteTimeOut;
+    }
+
+    /**
+     * 设置重试次数
+     *
+     * @param retryCount 重试次数
+     */
     public static void setRetryCount(int retryCount) {
         OkHttp.retryCount = retryCount;
     }
 
+    /**
+     * 设置UserAgent
+     *
+     * @param userAgent User-Agent: Dalvik/2.1.0 (Linux; U; Android 6.0.1; Nexus 5 Build/M4B30Z)
+     */
     public static void setUserAgent(String userAgent) {
         if (!TextUtils.isEmpty(userAgent))
             OkHttp.userAgent = userAgent;
     }
 
+    /**
+     * 设置服务端返回的error code，用于判断当时请求是成功还是失败
+     *
+     * @param errorCode code
+     */
     public static void setErrorCode(String errorCode) {
         if (!TextUtils.isEmpty(errorCode))
             OkHttp.errorCode = errorCode;
