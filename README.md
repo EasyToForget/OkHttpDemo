@@ -2,13 +2,13 @@
 
 对 OkHttp 的简单封装
 
-目前对应 OkHttp 版本`3.8.1`.
+目前对应 [OkHttp](https://github.com/square/okhttp) 版本`3.8.1`.
 
 ## Demo
 <img src="gif/demo01.gif" alt="demo"/>
 
 
-## 用法
+## 使用
 
 * Android Studio
 	
@@ -16,7 +16,7 @@
 	compile 'com.smile:okhttpintegration:1.0.4'
 	```
 	
-## 在 Application 中进行初始化
+## 初始化
 ```java
     public class MyApplication extends Application{	
         @Override
