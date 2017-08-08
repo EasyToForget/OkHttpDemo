@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btn_get).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Map<String, Object> params = new HashMap<>();
+                Map<String, Object> params = new HashMap<>();
                 params.put("lang", "zh");
                 params.put("type", 2);
                 params.put("page", 1);

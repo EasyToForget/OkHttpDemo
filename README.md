@@ -60,8 +60,7 @@
         error_description: "{错误码0: 1502183653-2442}"
     }
 ```
-- 返回的 json 数据结构有固定的诸如 status 的 key，根据 status key 所对应的 value 值来判断此接口是响应失败，
-你可以指定当 status 为 200 时代表接口响应成功。如下所示：
+- 返回的 json 数据结构有固定的诸如 status 的 key，根据 status key 所对应的 value 值来判断此接口是响应失败，你可以指定当 status 为 200 时代表接口响应成功。如下所示：
 ```java
     {
         status: 200,
@@ -73,40 +72,51 @@
 ```
 
 
-**注意** 任何时候对请求响应结果的判断不要依赖于http协议的CODE值，
-而应该首先检查返回的json数据结构是否存在 `error_code` 字段或 `status` 的值。
+**注意** 任何时候对请求响应结果的判断不要依赖于 http 协议的 CODE 值，而应该首先检查返回的 json 数据结构是否存在 `error_code` 字段或 `status` 的值。
 
 
 ### GET
 
 ```java
- OkHttp.get("http://api.tuikexing.com", params, new OkCallback() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.e("onResponse", response);
-                    }
-
-                    @Override
-                    public void onFailure(String error) {
-                        Log.e("onFailure", error);
-                    }
-                });
+                Map<String, Object> params = new HashMap<>();
+                 params.put("lang", "zh");
+                 params.put("type", 2);
+                 params.put("page", 1);
+                 params.put("pageSize", 10);
+                 OkHttp.get(HOME, params, new OkCallback() {
+                     @Override
+                     public void onResponse(String response) {
+                         Log.e("onResponse", response);
+                         Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
+                     }
+ 
+                     @Override
+                     public void onFailure(String error) {
+                         Log.e("onFailure", error);
+                         Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
+                     }
+                 });
 ```
 
 ### POST
 
 ```java
- OkHttp.post("http://api.tuikexing.com", params, new OkCallback() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.e("onResponse", response);
-                    }
-
-                    @Override
-                    public void onFailure(String error) {
-                        Log.e("onFailure", error);
-                    }
-                });
+                 Map<String, Object> params = new HashMap<>();
+                 params.put("email", "smile");
+                 params.put("password", "smile");
+                 OkHttp.post(LOGIN, params, new OkCallback() {
+                     @Override
+                     public void onResponse(String response) {
+                         Log.e("onResponse", response);
+                         Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
+                     }
+ 
+                     @Override
+                     public void onFailure(String error) {
+                         Log.e("onFailure", error);
+                         Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
+                     }
+                 });
 
 ```
 
