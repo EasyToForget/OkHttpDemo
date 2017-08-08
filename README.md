@@ -2,6 +2,11 @@
 
 对okhttp的简单封装
 
+## Demo
+<img src="gif/demo01.gif" alt="demo"/>
+
+
+
 目前对应okhttp版本`3.8.1`.
 
 ## 用法
