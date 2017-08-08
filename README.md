@@ -12,9 +12,9 @@
 
 Android Studio
 	
-	```
+``` java
 	compile 'com.smile:okhttpintegration:1.0.4'
-	```
+```
 	
 ## 初始化
 ```java
