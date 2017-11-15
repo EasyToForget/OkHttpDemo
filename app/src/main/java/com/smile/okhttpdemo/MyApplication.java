@@ -2,6 +2,7 @@ package com.smile.okhttpdemo;
 
 import android.app.Application;
 
+import com.smile.okhttpintegration.Log;
 import com.smile.okhttpintegration.OkHttp;
 
 /**
@@ -15,6 +16,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        Log.DEBUG = true;
         OkHttp.setConnectTimeOut(30);
         OkHttp.setReadTimeOut(30);
         OkHttp.setWriteTimeOut(30);

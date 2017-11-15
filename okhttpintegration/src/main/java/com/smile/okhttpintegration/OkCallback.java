@@ -59,6 +59,16 @@ public abstract class OkCallback implements Callback {
         }
         final String res = body.string();
 
+        if (OkHttp.isReturn){
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    onResponse(res);
+                }
+            });
+            return;
+        }
+
         //判断当前请求响应结果是不是json字符串
         if (!JsonUtil.isGoodJson(res)) {
             handler.post(new Runnable() {

@@ -56,6 +56,7 @@ import okhttp3.Response;
  */
 public class OkHttp {
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+    private static final MediaType TEXT = MediaType.parse("text/plain; charset=utf-8");
 
     private static int connectTimeOut = 10;
     private static int readTimeOut = 20;
@@ -70,6 +71,8 @@ public class OkHttp {
     static String errorCode = "error_code";
     static String statusKey;
     static String statusValue;
+
+    static boolean isReturn = false;
 
     private static OkHttpClient.Builder builder;
 
@@ -154,6 +157,17 @@ public class OkHttp {
     public static Call post(String url, Map<String, Object> params, OkCallback callback) {
         return post(0, url, params, null, callback);
     }
+    /**
+     * post方法
+     *
+     * @param url      url
+     * @param params   参数
+     * @param callback 回调函数
+     * @return call
+     */
+    public static Call post(String url, Map<String, Object> headers, Map<String, Object> params, OkCallback callback) {
+        return post(0, url, headers, params, null, callback);
+    }
 
     /**
      * post方法
@@ -177,11 +191,61 @@ public class OkHttp {
      * @return call
      */
     public static Call post(int timeOut, String url, Map<String, Object> params, Object tag, OkCallback callback) {
+        Log.e("url", url);
         Request.Builder builder = new Request.Builder().url(url);
         if (tag != null) {
             builder.tag(tag);
         }
 
+        FormBody.Builder formBuilder = new FormBody.Builder();
+        if (params == null) {
+            params = new HashMap<>();
+        }
+        if (!params.isEmpty()) {
+            for (String key : params.keySet()) {
+                if (TextUtils.isEmpty(key))
+                    continue;
+                formBuilder.add(key, params.get(key) == null ? "" : String.valueOf(params.get(key)));
+
+                Log.e("url", key + " = " + params.get(key));
+            }
+        }
+        builder.post(formBuilder.build());
+
+        Request request = builder.build();
+        Call call = getInstance()
+                .readTimeout(timeOut == 0 ? readTimeOut : timeOut, TimeUnit.SECONDS)
+                .writeTimeout(timeOut == 0 ? writeTimeOut : timeOut, TimeUnit.SECONDS)
+                .connectTimeout(connectTimeOut, TimeUnit.SECONDS)
+                .retryOnConnectionFailure(false)
+                .build()
+                .newCall(request);
+        call.enqueue(callback);
+        return call;
+    }
+
+
+    /**
+     * post方法
+     *
+     * @param url      url
+     * @param params   参数
+     * @param tag      标记位
+     * @param callback 回调函数
+     * @return call
+     */
+    public static Call post(int timeOut, String url, Map<String, Object> headers, Map<String, Object> params, Object tag, OkCallback callback) {
+        Request.Builder builder = new Request.Builder().url(url);
+        if (tag != null) {
+            builder.tag(tag);
+        }
+        if (headers != null && !headers.isEmpty()){
+            for (String key : headers.keySet()) {
+                if (TextUtils.isEmpty(key))
+                    continue;
+                builder.addHeader(key, String.valueOf(headers.get(key)));
+            }
+        }
         FormBody.Builder formBuilder = new FormBody.Builder();
         if (params == null) {
             params = new HashMap<>();
@@ -234,6 +298,32 @@ public class OkHttp {
         if (tag != null) {
             builder.tag(tag);
         }
+
+        RequestBody requestBody = RequestBody.create(JSON, json);
+
+        Request request = builder.post(requestBody).build();
+        Call call = getInstance()
+                .readTimeout(readTimeOut, TimeUnit.SECONDS)
+                .writeTimeout(writeTimeOut, TimeUnit.SECONDS)
+                .connectTimeout(connectTimeOut, TimeUnit.SECONDS)
+                .retryOnConnectionFailure(false)
+                .build()
+                .newCall(request);
+        call.enqueue(callback);
+        return call;
+    }
+    /**
+     * postJson方法
+     *
+     * @param url      url
+     * @param json     json
+     * @param callback 回调函数
+     * @return call
+     */
+    public static Call postJson(String url, Map<String, Object> params, String json, OkCallback callback) {
+        String endUrl = url + "?" + encodeParameters(params);
+
+        Request.Builder builder = new Request.Builder().url(endUrl);
 
         RequestBody requestBody = RequestBody.create(JSON, json);
 
@@ -343,7 +433,7 @@ public class OkHttp {
      * @param params 参数值
      * @return 参数字符串
      */
-    private static String encodeParameters(Map<String, Object> params) {
+    public static String encodeParameters(Map<String, Object> params) {
         if (params == null) {
             params = new HashMap<>();
         }
@@ -529,5 +619,13 @@ public class OkHttp {
             OkHttp.statusKey = statusKey;
             OkHttp.statusValue = statusValue;
         }
+    }
+
+    public static boolean isReturn() {
+        return isReturn;
+    }
+
+    public static void setReturn(boolean isReturn) {
+        OkHttp.isReturn = isReturn;
     }
 }

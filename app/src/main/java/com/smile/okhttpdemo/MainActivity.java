@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(String error) {
-                        Log.e("onFailure", error);
+                        Log.e("onFailure", error + "");
                         Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
                     }
                 });
