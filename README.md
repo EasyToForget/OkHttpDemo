@@ -2,7 +2,7 @@
 
 对 OkHttp 的简单封装
 
-目前对应 [OkHttp][2] 版本`3.8.1`.
+目前对应 [OkHttp][2] 版本`3.9.0`.
 
 ## [Demo][1]
 <img src="gif/demo01.gif" alt="demo"/>
@@ -17,13 +17,13 @@ Android Studio
     <dependency>
         <groupId>com.smile</groupId>
         <artifactId>okhttpintegration</artifactId>
-        <version>1.1.3</version>
+        <version>1.1.6</version>
         <type>pom</type>
     </dependency>
 ```
 or Gradle:
 ```groovy
-    compile 'com.smile:okhttpintegration:1.0.4'
+    compile 'com.smile:okhttpintegration:1.1.6'
 ```
 	
 ## 初始化
@@ -230,6 +230,6 @@ limitations under the License.
 
  [1]: https://github.com/EasyToForget/OkHttpDemo
  [2]: https://github.com/square/okhttp
- [3]: https://dl.bintray.com/easytoforget/maven/com/smile/okhttpintegration/1.0.4/okhttpintegration-1.0.4-sources.jar
+ [3]: https://dl.bintray.com/easytoforget/maven/com/smile/okhttpintegration/1.1.6/okhttpintegration-1.1.6-sources.jar
 
 
