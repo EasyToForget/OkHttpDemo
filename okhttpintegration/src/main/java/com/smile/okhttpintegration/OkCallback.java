@@ -17,7 +17,6 @@ package com.smile.okhttpintegration;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.NonNull;
 
 import java.io.IOException;
 
@@ -34,7 +33,7 @@ public abstract class OkCallback implements Callback {
     private static Handler handler = new Handler(Looper.getMainLooper());
 
     @Override
-    public void onFailure(@NonNull Call call, @NonNull final IOException e) {
+    public void onFailure(Call call, final IOException e) {
         //请求连接超时或请求响应失败
         handler.post(new Runnable() {
             @Override
@@ -45,7 +44,7 @@ public abstract class OkCallback implements Callback {
     }
 
     @Override
-    public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+    public void onResponse(Call call, Response response) throws IOException {
         ResponseBody body = response.body();
         if (body == null) {
             //请求响应为空
@@ -59,7 +58,7 @@ public abstract class OkCallback implements Callback {
         }
         final String res = body.string();
 
-        if (OkHttp.isReturn){
+        if (OkHttp.isReturn) {
             handler.post(new Runnable() {
                 @Override
                 public void run() {

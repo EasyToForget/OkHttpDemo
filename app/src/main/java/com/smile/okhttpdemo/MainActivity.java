@@ -38,16 +38,18 @@ public class MainActivity extends AppCompatActivity {
                 params.put("type", 2);
                 params.put("page", 1);
                 params.put("pageSize", 10);
-                OkHttp.get(HOME, params, new OkCallback() {
+                Map<String, Object> headers = new HashMap<>();
+                headers.put("Connection", "close");
+                OkHttp.get(HOME, headers, params,new OkCallback() {
                     @Override
                     public void onResponse(String response) {
-                        Log.e("onResponse", response);
+                        Log.e("onResponse", response + "");
                         Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onFailure(String error) {
-                        Log.e("onFailure", error);
+                        Log.e("onFailure", error + "");
                         Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
                     }
                 });

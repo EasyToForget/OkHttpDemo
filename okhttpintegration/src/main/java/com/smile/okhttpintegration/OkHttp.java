@@ -16,7 +16,6 @@
 package com.smile.okhttpintegration;
 
 import android.annotation.SuppressLint;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import java.io.File;
@@ -113,7 +112,19 @@ public class OkHttp {
      * @return call
      */
     public static Call get(String url, Map<String, Object> params, OkCallback callback) {
-        return get(url, params, null, callback);
+        return get(url, null, params, callback);
+    }
+
+    /**
+     * get方法
+     *
+     * @param url      url
+     * @param params   参数
+     * @param callback 回调函数
+     * @return call
+     */
+    public static Call get(String url, Map<String, Object> headers, Map<String, Object> params, OkCallback callback) {
+        return get(url, headers, params, null, callback);
     }
 
     /**
@@ -126,6 +137,19 @@ public class OkHttp {
      * @return call
      */
     public static Call get(String url, Map<String, Object> params, Object tag, OkCallback callback) {
+        return get(url, null, params, tag, callback);
+    }
+
+    /**
+     * get方法
+     *
+     * @param url      url
+     * @param params   参数
+     * @param tag      标记位
+     * @param callback 回调函数
+     * @return call
+     */
+    public static Call get(String url, Map<String, Object> headers, Map<String, Object> params, Object tag, OkCallback callback) {
         String endUrl = url + "?" + encodeParameters(params);
 
         Log.e("url", endUrl);
@@ -135,11 +159,20 @@ public class OkHttp {
             builder.tag(tag);
         }
 
+        if (headers != null && !headers.isEmpty()) {
+            for (String key : headers.keySet()) {
+                if (TextUtils.isEmpty(key))
+                    continue;
+                builder.addHeader(key, String.valueOf(headers.get(key)));
+            }
+        }
+
         Request request = builder.build();
         Call call = getInstance()
                 .readTimeout(readTimeOut, TimeUnit.SECONDS)
                 .writeTimeout(writeTimeOut, TimeUnit.SECONDS)
                 .connectTimeout(connectTimeOut, TimeUnit.SECONDS)
+                .retryOnConnectionFailure(true)
                 .build()
                 .newCall(request);
         call.enqueue(callback);
@@ -157,6 +190,7 @@ public class OkHttp {
     public static Call post(String url, Map<String, Object> params, OkCallback callback) {
         return post(0, url, params, null, callback);
     }
+
     /**
      * post方法
      *
@@ -239,7 +273,7 @@ public class OkHttp {
         if (tag != null) {
             builder.tag(tag);
         }
-        if (headers != null && !headers.isEmpty()){
+        if (headers != null && !headers.isEmpty()) {
             for (String key : headers.keySet()) {
                 if (TextUtils.isEmpty(key))
                     continue;
@@ -312,6 +346,7 @@ public class OkHttp {
         call.enqueue(callback);
         return call;
     }
+
     /**
      * postJson方法
      *
@@ -466,7 +501,7 @@ public class OkHttp {
         }
 
         @Override
-        public Response intercept(@NonNull Chain chain) throws IOException {
+        public Response intercept(Chain chain) throws IOException {
             Request request = chain.request();
             Response response = chain.proceed(request);
             while (!response.isSuccessful() && retryNum < maxRetry) {
@@ -521,7 +556,7 @@ public class OkHttp {
     private static class HeadInterceptor implements Interceptor {
 
         @Override
-        public Response intercept(@NonNull Chain chain) throws IOException {
+        public Response intercept(Chain chain) throws IOException {
             Request request = chain.request()
                     .newBuilder()
                     .header("User-Agent", userAgent) // 标明发送本次请求的客户端
